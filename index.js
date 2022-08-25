@@ -8,14 +8,14 @@ const Manager = require('./lib/manager')
 
 // Utilize inquirer to gather input information from user
 const initialPrompt = () => {
-    return inquirer.prompt([
+    return inquirer.prompt(
         {
             type: 'checkbox',
             message: 'What type of employee are you creating?',
-            name: 'initial',
-            choices: ['Manager', 'Engineer', 'Intern'], 
+            name: 'choice',
+            choices: ['Manager', 'Engineer', 'Intern', 'End'], 
         }
-    ])}; 
+    )}; 
 
 
 const managerPrompt = () => {
@@ -138,18 +138,24 @@ const internHTML = ({name, email, id, school}) =>
 <h2 class="github">School: ${school}</h2>
 `;
 
-const init = () => {
+const creatorLoop = () => 
     initialPrompt()
-    .then(answer => {
-        if(answer === 'Manager') {
-            managerPrompt();
-        } else if (answer === 'Engineer') {
-            engineerPrompt();
-        } else if (answer === 'Intern') {
-            internPrompt();
-        }
-    })
-    .catch((err) => console.error(err));
-}
-
-init();
+    .then(({ choice }) => {
+        if(choice === 'Engineer') {
+           return engineerPrompt()
+            .then((engineer) => {
+                return engineerHTML(engineer), creatorLoop();
+            });
+        } else if (choice === 'Intern') {
+            return internPrompt()
+            .then((intern) => {
+                return internHTML(intern), creatorLoop();
+            });
+        } else if (choice === 'Manager') {
+            return managerPrompt()
+            .then((manager) => {
+                return managerHTML(intern), creatorLoop();
+            });
+        } else {
+            console.log("Finished Adding");
+}})
