@@ -144,7 +144,9 @@ const creatorLoop = () =>
         if(choice === 'Engineer') {
            return engineerPrompt()
             .then((engineer) => {
-                return engineerHTML(engineer), creatorLoop();
+                fs.writeFile('index.html', engineerHTML(engineer), (err) =>
+                err ? console.error(err) : console.log('Success!')) 
+                return creatorLoop();
             });
         } else if (choice === 'Intern') {
             return internPrompt()
@@ -154,8 +156,10 @@ const creatorLoop = () =>
         } else if (choice === 'Manager') {
             return managerPrompt()
             .then((manager) => {
-                return managerHTML(intern), creatorLoop();
+                return managerHTML(manager), creatorLoop();
             });
         } else {
             console.log("Finished Adding");
 }})
+
+creatorLoop();
