@@ -132,7 +132,7 @@ const engineerHTML = ({ name, email, id, github }) =>
 const internHTML = ({ name, email, id, school }) =>
   `<div class="container">
 <h1 class="name">Name: ${name}</h1>
-<h1 class="position>Position: Intern</h1>
+<h1 class="position">Position: Intern</h1>
 <h2 class="email">Email: ${email}</h2>
 <h2 class="id">ID: ${id}</h2>
 <h2 class="github">School: ${school}</h2>
@@ -165,7 +165,7 @@ managerPrompt()
     return creatorLoop();
   })
   .then(() => {
-    console.log("Hey");
+    // console.log("Hey");
     fs.writeFile(
       "index.html",
       responses.join("") + "</div> </body> </html>",
